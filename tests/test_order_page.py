@@ -1,6 +1,4 @@
 import pytest
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import allure
 from pages.main_page import MainPageScooter
 from pages.order_page import OrderPageScooter
@@ -59,7 +57,7 @@ class TestOrderPage:
         order_page.click_rental_order_button()
         order_page.click_yes_button()
     
-        assert WebDriverWait(driver, 3).until(EC.visibility_of_element_located(order_page.order_success_title)).is_displayed() 
+        assert order_page.is_order_success_message_displayed()
 
     @allure.title('Переход на главную страницу сайта при клике на логотип "Самокат" в левом верхнем углу экрана')
     @allure.description('Нажимаем на логотип "Самокат" в левом верхнем углу экрана и проверяем, что произошёл переход на главную страницу сайта')
@@ -71,4 +69,4 @@ class TestOrderPage:
         main_page.click_order_button(0)
         order_page.click_scooter_logo()
 
-        assert WebDriverWait(driver, 3).until(EC.url_to_be(constants.BASE_URL))
+        assert order_page.wait_for_url(constants.BASE_URL)

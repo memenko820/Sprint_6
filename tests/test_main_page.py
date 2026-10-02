@@ -1,6 +1,4 @@
 import pytest
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import allure
 from pages.main_page import MainPageScooter
 import constants
@@ -36,10 +34,6 @@ class TestMainPage:
         main_page = MainPageScooter(driver)
 
         main_page.click_yandex_logo()
-        WebDriverWait(driver, 3).until(EC.number_of_windows_to_be(2))
+        main_page.switch_to_new_window()
 
-        driver.switch_to.window(driver.window_handles[1])
-
-        print(driver.current_url)
-
-        assert WebDriverWait(driver, 5).until(EC.url_to_be(constants.YANDEX_PAGE))
+        assert main_page.wait_for_url(constants.YANDEX_PAGE)
